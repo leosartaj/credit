@@ -18,11 +18,20 @@ def pDir():
     """
     return os.getcwd()
 
+def fileExists(fName, dire=pDir()):
+    """
+    Check if a file exists
+    """
+    if os.path.isfile(os.path.join(dire, fName)):
+        return True
+    else:
+        return False
+
 def add(fName, num, dire=pDir()):
     """
     add a num to file
     """
-    f = open(fName, 'a')
+    f = open(os.path.join(dire, fName), 'a')
     f.write(' + ' + str(num))
     f.close()
 
@@ -30,7 +39,7 @@ def sub(fName, num, dire=pDir()):
     """
     subtract a num to file
     """
-    f = open(fName, 'a')
+    f = open(os.path.join(dire, fName), 'a')
     f.write(' - ' + str(num))
     f.close()
 
@@ -47,12 +56,14 @@ def display(dire=pDir()):
         accs += filename + ' '
     return 'Accounts -> ' + accs
 
-#print display()
+print display()
 
 def total(fName, dire=pDir()):
     """
     finds the total balance with a particular file
     """
+    if not fileExists(fName, dire):
+        raise Exception('No such account')
     f = open(os.path.join(dire, fName), 'r')
     net = 0
     for line in f:
@@ -74,6 +85,8 @@ def display_acc(fName, dire=pDir()):
     """
     displays the content of a file
     """
+    if not fileExists(fName, dire):
+        raise Exception('No such account')
     f = open(os.path.join(dire, fName), 'r')
     acc = fName + ' ->'
     for line in f:
@@ -81,12 +94,14 @@ def display_acc(fName, dire=pDir()):
     f.close()
     return acc
 
-print display_acc('new')
+#print display_acc('new')
 
 def reset(fName, dire=pDir()):
     """
     Reset an account to 0
     """
+    if not fileExists(fName, dire):
+        raise Exception('No such account')
     f = open(os.path.join(dire, fName), 'w')
     f.close()
 
@@ -97,22 +112,28 @@ def rem_last(fName, dire=pDir()):
     """
     remove the last entry from file
     """
+    if not fileExists(fName, dire):
+        raise Exception('No such account')
     f = open(os.path.join(dire, fName), 'r')
     rline = []
     for line in f:
         rline = line.replace('\n', '')
         rline = rline.split(' ')
     f.close()
+    if len(rline) < 3:
+        return 
     f = open(fName, 'w')
     f.write(' '.join(rline[:-2]))
 
-#rem_last('new')
+##rem_last('new')
 #print display_acc('new')
 
-def delete(fName):
+def delete(fName, dire=pDir()):
     """
     delete an account
     """
-    os.remove(fName)
+    if not fileExists(fName, dire):
+        raise Exception('No such account')
+    os.remove(os.path.join(dire, fName))
 
 #delete('new')
