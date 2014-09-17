@@ -2,11 +2,12 @@
 
 ##
 # Credit
-# https://github.com/MnC-69/credit.git
+# https://github.com/leosartaj/credit.git
 #
 # Copyright (c) 2014 Sartaj Singh
 # Licensed under the MIT license.
 ##
+#
 
 from func import newAcc
 import sys

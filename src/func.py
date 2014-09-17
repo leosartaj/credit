@@ -2,7 +2,7 @@
 
 ##
 # Credit
-# https://github.com/MnC-69/credit.git
+# https://github.com/leosartaj/credit.git
 #
 # Copyright (c) 2014 Sartaj Singh
 # Licensed under the MIT license.
@@ -48,10 +48,6 @@ def update(fName, num, dire=pDir()):
         f.write(' + ' + num)
     f.close()
 
-#update('new', '+10')
-#update('new', '10')
-#update('new', '-10')
-
 def display(dire=pDir()):
     """
     gives the list of files
@@ -61,7 +57,6 @@ def display(dire=pDir()):
         accs += filename + ' '
     return 'Accounts -> ' + accs
 
-#print display()
 
 def total(fName, dire=pDir()):
     """
@@ -84,7 +79,14 @@ def total(fName, dire=pDir()):
     f.close()
     return net
 
-#print total('new')
+def net(dire=pDir()):
+    """
+    Get the net credit accounting all files
+    """
+    net = 0
+    for filename in os.listdir(dire):
+        net += total(filename, dire)
+    return net
 
 def display_acc(fName, dire=pDir()):
     """
@@ -99,8 +101,6 @@ def display_acc(fName, dire=pDir()):
     f.close()
     return acc
 
-#print display_acc('new')
-
 def reset(fName, dire=pDir()):
     """
     Reset an account to 0
@@ -109,9 +109,6 @@ def reset(fName, dire=pDir()):
         raise Exception('No such account')
     f = open(os.path.join(dire, fName), 'w')
     f.close()
-
-#reset('new')
-#print display_acc('new')
 
 def rem_last(fName, dire=pDir()):
     """
@@ -130,9 +127,6 @@ def rem_last(fName, dire=pDir()):
     f = open(fName, 'w')
     f.write(' '.join(rline[:-2]))
 
-#rem_last('new')
-#print display_acc('new')
-
 def delete(fName, dire=pDir()):
     """
     delete an account
@@ -140,5 +134,3 @@ def delete(fName, dire=pDir()):
     if not fileExists(fName, dire):
         raise Exception('No such account')
     os.remove(os.path.join(dire, fName))
-
-#delete('new')

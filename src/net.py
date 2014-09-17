@@ -7,16 +7,15 @@
 # Copyright (c) 2014 Sartaj Singh
 # Licensed under the MIT license.
 ##
-#
 
-from func import update
+from func import net
 import sys
 
 def main():
-    if len(sys.argv) == 4: 
-        update(sys.argv[1], sys.argv[2], sys.argv[3])
-    elif len(sys.argv) == 3:
-        update(sys.argv[1], sys.argv[2])
+    if len(sys.argv) == 2: 
+        print net(sys.argv[1]) 
+    elif len(sys.argv) == 1:
+        print net()
 
 if __name__ == '__main__':
     main()
