@@ -30,13 +30,13 @@ then
     exit 1
 fi
 
-# Path to install
-path=/usr/local/credit
+INSTALL_DIR=/usr/local/credit
 
-if [ ! -d $path ]
+if [ ! -d $INSTALL_DIR ]
 then
-    mkdir $path           # Make directory if directory does not exist
+    mkdir $INSTALL_DIR           # Make directory if directory does not exist
 fi
 
 # Install files
 install -m 0755 "$SCRIPT_DIR/scripts/credit" "/usr/bin/" # Copy the credit script
+install -m 0755 "$SCRIPT_DIR"/src/*.py "$INSTALL_DIR"

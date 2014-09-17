@@ -27,25 +27,30 @@ def fileExists(fName, dire=pDir()):
     else:
         return False
 
-def add(fName, num, dire=pDir()):
-    """
-    add a num to file
-    """
-    f = open(os.path.join(dire, fName), 'a')
-    f.write(' + ' + str(num))
+def newAcc(fName, dire=pDir()):
+    if fileExists(fName, dire):
+        raise Exception('Account Exists')
+    f = open(os.path.join(dire, fName), 'w')
     f.close()
 
-def sub(fName, num, dire=pDir()):
+def update(fName, num, dire=pDir()):
     """
-    subtract a num to file
+    update to file
     """
+    if not fileExists(fName, dire):
+        raise Exception('No such account')
     f = open(os.path.join(dire, fName), 'a')
-    f.write(' - ' + str(num))
+    if num[0] == '+':
+        f.write(' + ' + num[1:])
+    elif num[0] == '-':
+        f.write(' - ' + num[1:])
+    else:
+        f.write(' + ' + num)
     f.close()
 
-#add('new', '10')
-#sub('new', '10')
-#add('new', '10')
+#update('new', '+10')
+#update('new', '10')
+#update('new', '-10')
 
 def display(dire=pDir()):
     """
@@ -56,7 +61,7 @@ def display(dire=pDir()):
         accs += filename + ' '
     return 'Accounts -> ' + accs
 
-print display()
+#print display()
 
 def total(fName, dire=pDir()):
     """
@@ -125,7 +130,7 @@ def rem_last(fName, dire=pDir()):
     f = open(fName, 'w')
     f.write(' '.join(rline[:-2]))
 
-##rem_last('new')
+#rem_last('new')
 #print display_acc('new')
 
 def delete(fName, dire=pDir()):
