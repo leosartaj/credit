@@ -13,9 +13,16 @@ INSTALL_DIR='/usr/local/credit'
 
 help_credit()
 {
-  echo "Usage: $0 <flag>"
-  echo "Valid flags:"
+  echo "Usage: $0"
   echo "  -h : Displays this help"
+  echo "  [display] : Displays all the account names"
+  echo "  [new] [account_name] : Adds a new account"
+  echo "  [delete] [account_name] : Deletes the account"
+  echo "  [print] [account_name] : Print the contents of the account"
+  echo "  [rlast] [account_name] : remove the last entry"
+  echo "  [total] [account_name] : Gives the net balance"
+  echo "  [reset] [account_name] : Reset the account contents to 0"
+  echo "  [update] [account_name] [+/-Num] : Add an entry"
   exit 1
 }
 
@@ -48,46 +55,36 @@ do
   esac
 done
 
-if [ "$1" = "new" ]; then
-  if [ ! $# -eq 2 ]; then
+if [ $# -eq 1 ]; then
+  if [ "$1" = "display" ]; then
+    python2.7 "$INSTALL_DIR/display.py" "$CREDIT_DIR" 
+  else
     help_credit
   fi
-  python2.7 "$INSTALL_DIR/new.py" "$2" "$CREDIT_DIR" 
-elif [ "$1" = "delete" ]; then
-  if [ ! $# -eq 2 ]; then
+fi
+
+if [ $# -eq 2 ]; then
+  if [ "$1" = "new" ]; then
+    python2.7 "$INSTALL_DIR/new.py" "$2" "$CREDIT_DIR" 
+  elif [ "$1" = "delete" ]; then
+    python2.7 "$INSTALL_DIR/delete.py" "$2" "$CREDIT_DIR" 
+  elif [ "$1" = "print" ]; then
+    python2.7 "$INSTALL_DIR/display_acc.py" "$2" "$CREDIT_DIR" 
+  elif [ "$1" = "rlast" ]; then
+    python2.7 "$INSTALL_DIR/rem_last.py" "$2" "$CREDIT_DIR" 
+  elif [ "$1" = "reset" ]; then
+    python2.7 "$INSTALL_DIR/reset.py" "$2" "$CREDIT_DIR" 
+  elif [ "$1" = "total" ]; then
+    python2.7 "$INSTALL_DIR/total.py" "$2" "$CREDIT_DIR" 
+  else
     help_credit
   fi
-  python2.7 "$INSTALL_DIR/delete.py" "$2" "$CREDIT_DIR" 
-elif [ "$1" = "display" ]; then
-  if [ ! $# -eq 1 ]; then
+fi
+
+if [ $# -eq 3 ]; then
+  if [ "$1" = "update" ]; then
+    python2.7 "$INSTALL_DIR/update.py" "$2" "$3" "$CREDIT_DIR" 
+  else
     help_credit
   fi
-  python2.7 "$INSTALL_DIR/display.py" "$CREDIT_DIR" 
-elif [ "$1" = "disacc" ]; then
-  if [ ! $# -eq 2 ]; then
-    help_credit
-  fi
-  python2.7 "$INSTALL_DIR/display_acc.py" "$2" "$CREDIT_DIR" 
-elif [ "$1" = "rlast" ]; then
-  if [ ! $# -eq 2 ]; then
-    help_credit
-  fi
-  python2.7 "$INSTALL_DIR/rem_last.py" "$2" "$CREDIT_DIR" 
-elif [ "$1" = "reset" ]; then
-  if [ ! $# -eq 2 ]; then
-    help_credit
-  fi
-  python2.7 "$INSTALL_DIR/reset.py" "$2" "$CREDIT_DIR" 
-elif [ "$1" = "total" ]; then
-  if [ ! $# -eq 2 ]; then
-    help_credit
-  fi
-  python2.7 "$INSTALL_DIR/total.py" "$2" "$CREDIT_DIR" 
-elif [ "$1" = "update" ]; then
-  if [ ! $# -eq 3 ]; then
-    help_credit
-  fi
-  python2.7 "$INSTALL_DIR/update.py" "$2" "$3" "$CREDIT_DIR" 
-else
-  help_credit
 fi
