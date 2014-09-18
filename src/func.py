@@ -31,9 +31,7 @@ def timestamp():
     """
     gives a formatted timestamp
     """
-    localtime = time.localtime(time.time())
-    timer = str(localtime[3]) + ':' + str(localtime[4]) + ':' + str(localtime[5])
-    return timer
+    return time.strftime("%x")
 
 def newAcc(fName, dire=pDir()):
     if fileExists(fName, dire):
@@ -48,7 +46,15 @@ def update(fName, num, dire=pDir()):
     """
     if not fileExists(fName, dire):
         raise Exception('No such account')
-    f = open(os.path.join(dire, fName), 'a')
+    f = open(os.path.join(dire, fName), 'a+')
+    f.seek(0, 0)
+    b = 0
+    for line in f:
+        if line[0] == '[' and timestamp() == line[1:-2]: # find the correct date
+            b = 1
+            break
+    if b == 0: # if no such date add a new one
+        f.write('[' + timestamp() + ']\n')
     if num[0] == '+':
         f.write(' + ' + num[1:])
     elif num[0] == '-':
@@ -65,7 +71,6 @@ def display(dire=pDir()):
     for filename in os.listdir(dire):
         accs += filename + ' '
     return 'Accounts -> ' + accs
-
 
 def total(fName, dire=pDir()):
     """
@@ -84,9 +89,9 @@ def total(fName, dire=pDir()):
             if line[i] == '+' or line[i] == '-':
                 continue
             if line[i - 1] == '+':
-                net += int(line[i])
+                net += float(line[i])
             else:
-                net -= int(line[i])
+                net -= float(line[i])
     f.close()
     return net
 
