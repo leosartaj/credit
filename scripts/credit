@@ -20,7 +20,6 @@ help_credit()
   echo "  [new] [account_name] : Adds a new account"
   echo "  [delete] [account_name] : Deletes the account"
   echo "  [print] [account_name] : Print the contents of the account"
-  echo "  [rlast] [account_name] : remove the last entry"
   echo "  [total] [account_name] : Gives the net balance"
   echo "  [reset] [account_name] : Reset the account contents to 0"
   echo "  [update] [account_name] [+/-Num] : Add an entry"
@@ -73,8 +72,6 @@ if [ $# -eq 2 ]; then
     python2.7 "$INSTALL_DIR/delete.py" "$2" "$CREDIT_DIR" 
   elif [ "$1" = "print" ]; then
     python2.7 "$INSTALL_DIR/display_acc.py" "$2" "$CREDIT_DIR" 
-  elif [ "$1" = "rlast" ]; then
-    python2.7 "$INSTALL_DIR/rem_last.py" "$2" "$CREDIT_DIR" 
   elif [ "$1" = "reset" ]; then
     python2.7 "$INSTALL_DIR/reset.py" "$2" "$CREDIT_DIR" 
   elif [ "$1" = "total" ]; then

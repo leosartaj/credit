@@ -10,7 +10,7 @@
 
 # Various helper functions
 
-import os
+import os, time
 
 def pDir():
     """
@@ -27,10 +27,19 @@ def fileExists(fName, dire=pDir()):
     else:
         return False
 
+def timestamp():
+    """
+    gives a formatted timestamp
+    """
+    localtime = time.localtime(time.time())
+    timer = str(localtime[3]) + ':' + str(localtime[4]) + ':' + str(localtime[5])
+    return timer
+
 def newAcc(fName, dire=pDir()):
     if fileExists(fName, dire):
         raise Exception('Account Exists')
     f = open(os.path.join(dire, fName), 'w')
+    f.write('[Created -> ' + timestamp() + ']\n')
     f.close()
 
 def update(fName, num, dire=pDir()):
@@ -67,6 +76,8 @@ def total(fName, dire=pDir()):
     f = open(os.path.join(dire, fName), 'r')
     net = 0
     for line in f:
+        if line[0] == '[':
+            continue
         line = line.replace('\n', '')
         line = line.split(' ')
         for i in range(1, len(line)):
@@ -95,7 +106,7 @@ def display_acc(fName, dire=pDir()):
     if not fileExists(fName, dire):
         raise Exception('No such account')
     f = open(os.path.join(dire, fName), 'r')
-    acc = fName + ' ->'
+    acc = ''
     for line in f:
         acc += line
     f.close()
@@ -107,25 +118,8 @@ def reset(fName, dire=pDir()):
     """
     if not fileExists(fName, dire):
         raise Exception('No such account')
-    f = open(os.path.join(dire, fName), 'w')
-    f.close()
-
-def rem_last(fName, dire=pDir()):
-    """
-    remove the last entry from file
-    """
-    if not fileExists(fName, dire):
-        raise Exception('No such account')
-    f = open(os.path.join(dire, fName), 'r')
-    rline = []
-    for line in f:
-        rline = line.replace('\n', '')
-        rline = rline.split(' ')
-    f.close()
-    if len(rline) < 3:
-        return 
-    f = open(fName, 'w')
-    f.write(' '.join(rline[:-2]))
+    delete(fName, dire)
+    newAcc(fName, dire)
 
 def delete(fName, dire=pDir()):
     """
