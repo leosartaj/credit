@@ -21,6 +21,7 @@ help_credit()
   echo "  [delete] [account_name] : Deletes the account"
   echo "  [print] [account_name] : Print the contents of the account"
   echo "  [total] [account_name] : Gives the net balance"
+  echo "  [totals] : Gives the net balance of each account"
   echo "  [reset] [account_name] : Reset the account contents to 0"
   echo "  [update] [account_name] [+/-Num] : Add an entry"
   exit 1
@@ -60,6 +61,8 @@ if [ $# -eq 1 ]; then
     python2.7 "$INSTALL_DIR/display.py" "$CREDIT_DIR" 
   elif [ "$1" = "net" ]; then
     python2.7 "$INSTALL_DIR/net.py" "$CREDIT_DIR" 
+  elif [ "$1" = "totals" ]; then
+    python2.7 "$INSTALL_DIR/total_all.py" "$CREDIT_DIR" 
   else
     help_credit
   fi

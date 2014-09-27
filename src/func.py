@@ -1,5 +1,4 @@
 #!/usr/bin/python2
-
 ##
 # Credit
 # https://github.com/leosartaj/credit.git
@@ -54,7 +53,7 @@ def update(fName, num, dire=pDir()):
             b = 1
             break
     if b == 0: # if no such date add a new one
-        f.write('[' + timestamp() + ']\n')
+        f.write('\n[' + timestamp() + ']\n')
     if num[0] == '+':
         f.write(' + ' + num[1:])
     elif num[0] == '-':
@@ -94,6 +93,13 @@ def total(fName, dire=pDir()):
                 net -= float(line[i])
     f.close()
     return net
+
+def total_all(dire=pDir()):
+    """
+    Total of all accounts
+    """
+    for filename in os.listdir(dire):
+        print filename, '->', total(filename, dire)
 
 def net(dire=pDir()):
     """
