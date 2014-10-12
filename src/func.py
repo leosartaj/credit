@@ -35,9 +35,8 @@ def timestamp():
 def newAcc(fName, dire=pDir()):
     if fileExists(fName, dire):
         raise Exception('Account Exists')
-    f = open(os.path.join(dire, fName), 'w')
-    f.write('[Created -> ' + timestamp() + ']\n')
-    f.close()
+    with open(os.path.join(dire, fName), 'w') as f:
+        f.write('[Created -> ' + timestamp() + ']\n')
 
 def update(fName, num, dire=pDir()):
     """
@@ -45,22 +44,22 @@ def update(fName, num, dire=pDir()):
     """
     if not fileExists(fName, dire):
         raise Exception('No such account')
-    f = open(os.path.join(dire, fName), 'a+')
-    f.seek(0, 0)
-    b = 0
-    for line in f:
-        if line[0] == '[' and timestamp() == line[1:-2]: # find the correct date
-            b = 1
-            break
-    if b == 0: # if no such date add a new one
-        f.write('\n[' + timestamp() + ']\n')
-    if num[0] == '+':
-        f.write(' + ' + num[1:])
-    elif num[0] == '-':
-        f.write(' - ' + num[1:])
-    else:
-        f.write(' + ' + num)
-    f.close()
+
+    with open(os.path.join(dire, fName), 'a+') as f:
+        f.seek(0, 0)
+        b = 0
+        for line in f:
+            if line[0] == '[' and timestamp() == line[1:-2]: # find the correct date
+                b = 1
+                break
+        if b == 0: # if no such date add a new one
+            f.write('\n[' + timestamp() + ']\n')
+        if num[0] == '+':
+            f.write(' + ' + num[1:])
+        elif num[0] == '-':
+            f.write(' - ' + num[1:])
+        else:
+            f.write(' + ' + num)
 
 def display(dire=pDir()):
     """
@@ -77,21 +76,20 @@ def total(fName, dire=pDir()):
     """
     if not fileExists(fName, dire):
         raise Exception('No such account')
-    f = open(os.path.join(dire, fName), 'r')
-    net = 0
-    for line in f:
-        if line[0] == '[':
-            continue
-        line = line.replace('\n', '')
-        line = line.split(' ')
-        for i in range(1, len(line)):
-            if line[i] == '+' or line[i] == '-':
+    with open(os.path.join(dire, fName), 'r') as f:
+        net = 0
+        for line in f:
+            if line[0] == '[':
                 continue
-            if line[i - 1] == '+':
-                net += float(line[i])
-            else:
-                net -= float(line[i])
-    f.close()
+            line = line.replace('\n', '')
+            line = line.split(' ')
+            for i in range(1, len(line)):
+                if line[i] == '+' or line[i] == '-':
+                    continue
+                if line[i - 1] == '+':
+                    net += float(line[i])
+                else:
+                    net -= float(line[i])
     return net
 
 def total_all(dire=pDir()):
@@ -116,11 +114,10 @@ def display_acc(fName, dire=pDir()):
     """
     if not fileExists(fName, dire):
         raise Exception('No such account')
-    f = open(os.path.join(dire, fName), 'r')
-    acc = ''
-    for line in f:
-        acc += line
-    f.close()
+    with open(os.path.join(dire, fName), 'r') as f:
+        acc = ''
+        for line in f:
+            acc += line
     return acc
 
 def reset(fName, dire=pDir()):
