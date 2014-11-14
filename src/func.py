@@ -10,6 +10,7 @@
 # Various helper functions
 
 import os, time
+from time import strftime
 
 def pDir():
     """
@@ -23,14 +24,13 @@ def fileExists(fName, dire=pDir()):
     """
     if os.path.isfile(os.path.join(dire, fName)):
         return True
-    else:
-        return False
+    return False
 
 def timestamp():
     """
     gives a formatted timestamp
     """
-    return time.strftime("%x")
+    return strftime("%x")
 
 def newAcc(fName, dire=pDir()):
     if fileExists(fName, dire):
@@ -105,7 +105,8 @@ def net(dire=pDir()):
     """
     net = 0
     for filename in os.listdir(dire):
-        net += total(filename, dire)
+        if filename != 'me':
+            net += total(filename, dire)
     return net
 
 def display_acc(fName, dire=pDir()):
