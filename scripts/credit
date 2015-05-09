@@ -1,13 +1,5 @@
 #! /bin/sh
 
-##
-# Credit
-# https://github.com/leosartaj/credit.git
-#
-# Copyright (c) 2014 Sartaj Singh
-# Licensed under the MIT license.
-##
-
 # installed directory
 INSTALL_DIR='/usr/local/credit'
 

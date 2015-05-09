@@ -1,19 +1,10 @@
 #!/usr/bin/python2
 
-##
-# Credit
-# https://github.com/leosartaj/credit.git
-#
-# Copyright (c) 2014 Sartaj Singh
-# Licensed under the MIT license.
-##
-#
-
 from func import newAcc
 import sys
 
 def main():
-    if len(sys.argv) == 3: 
+    if len(sys.argv) == 3:
         newAcc(sys.argv[1], sys.argv[2])
     elif len(sys.argv) == 2:
         newAcc(sys.argv[1])

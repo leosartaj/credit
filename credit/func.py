@@ -1,11 +1,4 @@
 #!/usr/bin/python2
-##
-# Credit
-# https://github.com/leosartaj/credit.git
-#
-# Copyright (c) 2014 Sartaj Singh
-# Licensed under the MIT license.
-##
 
 # Various helper functions
 
