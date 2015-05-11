@@ -4,7 +4,7 @@
 Main module
 """
 
-import os
+import os, math
 from datetime import date
 import jsonhelper as jh
 import exce
@@ -104,7 +104,7 @@ def total_list(l):
     Sums up the list
     """
     l = map(float, l)
-    return sum(l)
+    return math.fsum(l)
 
 
 def total(fPath):
