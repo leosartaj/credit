@@ -4,7 +4,8 @@
 Main module
 """
 
-import os, time
+import os
+from datetime import date
 import jsonhelper as jh
 import exce
 
@@ -39,19 +40,11 @@ def fileExists(fPath):
     return False
 
 
-def format_date(d, form="%d/%m/%y"):
+def timestamp(d=date.today(), form="%d/%m/%y"):
     """
     formats dates
     """
     return d.strftime(form)
-
-
-def timestamp():
-    """
-    gives a formatted timestamp
-    """
-    today = time.date.today()
-    return format_date(today)
 
 
 def readSheet(fPath):
@@ -74,17 +67,16 @@ def saveSheet(fPath, json_dict):
         raise exce.CreditSheetError('No such credit sheet')
 
     with open(fPath, 'w') as f:
-        json_str = dict_to_json(json_dict)
+        json_str = jh.dict_to_json(json_dict)
         f.write(json_str)
 
 
-def newSheet(fPath):
+def newSheet(fPath, json_dict={INIT: timestamp()}):
     if fileExists(fPath):
         raise exce.CreditSheetExists('Credit sheet Exists')
 
-    data = {INIT: timestamp()}
     with open(fPath, 'w') as f:
-        f.write(jh.dict_to_json(data))
+        f.write(jh.dict_to_json(json_dict))
 
 
 def display(dire=pDir()):
@@ -92,22 +84,24 @@ def display(dire=pDir()):
     Generates the name of credit sheets
     """
     for filename in os.listdir(dire):
-        if os.path.splitext(filename)[1] is SHEETEXT:
-            yield filename
+        name, ext = os.path.splitext(filename)
+        if ext == SHEETEXT:
+            yield name
 
 
 def update(fPath, field, value):
     """
     update to file
     """
-    json_dict = readsheet(fPath)
+    json_dict = readSheet(fPath)
     json_dict = jh.update_dict(json_dict, field, value)
     saveSheet(fPath, json_dict)
 
 
 def total_list(l):
     """
-    Sums up a list
+    converts the list to list of floats
+    Sums up the list
     """
     l = map(float, l)
     return sum(l)
@@ -117,11 +111,11 @@ def total(fPath):
     """
     finds the total balance in a credit sheet
     """
-    json_dict = readsheet(fPath)
+    json_dict = readSheet(fPath)
 
     val = 0.0
     for key in json_dict:
-        if not key is INIT:
+        if not key == INIT:
             val += total_list(json_dict[key])
     return val
 

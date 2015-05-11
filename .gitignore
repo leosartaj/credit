@@ -1,1 +1,2 @@
-src/*.pyc
+*.pyc
+__pycache__

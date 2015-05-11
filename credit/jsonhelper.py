@@ -21,17 +21,6 @@ def json_to_dict(json_str):
     return json.loads(json_str)
 
 
-def get_value(json_dict, field):
-    """
-    Gets the value of a field
-    returns the value
-    if no such field raises NoField exception
-    """
-    if not json_dict.has_key(field):
-        raise exce.NoField("No such field: %s" %(field))
-    return json_dict[field]
-
-
 def update_dict(json_dict, field, val):
     """
     updates the value of a field
