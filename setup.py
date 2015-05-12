@@ -13,7 +13,8 @@ setup(
     author = 'Sartaj Singh',
     author_email = 'singhsartaj94@gmail.com',
     description = ('Manage your finances easily and effectively'),
-    long_description = open('README.rst').read() + '\n\n' + open('CHANGELOG.rst').read(),
+    long_description = open('README.rst').read() + '\n\n' + \
+    open('CHANGELOG.rst').read(),
     license = 'MIT',
     keywords = 'expenditure finances ledger',
     url = 'http://github.com/leosartaj/credit',
