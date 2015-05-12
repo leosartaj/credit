@@ -2,11 +2,11 @@
 
 import os
 from credit import main, exce
-import testData as td
+from credit.tests import testData as td
 import unittest
 
 
-class TestnewSheet(unittest.TestCase):
+class Test_newSheet(unittest.TestCase):
 
     def setUp(self):
         self.fakeDict = td.fakeDict(0, 0)

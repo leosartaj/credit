@@ -3,11 +3,11 @@
 import os
 from credit import main, exce
 from credit import jsonhelper as jh
-import testData as td
+from credit.tests import testData as td
 import unittest
 
 
-class TestsaveSheet(unittest.TestCase):
+class Test_saveSheet(unittest.TestCase):
 
     def setUp(self):
         fakeDict = self.fakeDict = td.fakeDict()

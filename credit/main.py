@@ -120,14 +120,15 @@ def total(fPath):
     return val
 
 
-def total_recurr(dire=pDir()):
+def total_all(dire=pDir()):
     """
     Total of all sheets
     """
     for filename in os.listdir(dire):
         fPath = full_path_to(filename, dire)
-        creditSheet = os.path.splitext(filename)[0]
-        yield filename, total(fPath)
+        name, ext = os.path.splitext(filename)
+        if ext == SHEETEXT:
+            yield filename, total(fPath)
 
 
 def net(dire=pDir(), ignore=['me']):
@@ -135,7 +136,7 @@ def net(dire=pDir(), ignore=['me']):
     Get the net credit accounting all files
     """
     net = 0.0
-    for sheet, bal in total_recurr(dire):
+    for sheet, bal in total_all(dire):
         if not sheet in ignore:
             net += bal
     return net
@@ -163,7 +164,7 @@ def deleteSheet(fPath):
     os.remove(fPath)
 
 
-def reset(fPath):
+def resetSheet(fPath):
     """
     Reset(recreate) a credit sheet
     """

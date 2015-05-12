@@ -10,6 +10,8 @@ from datetime import date, timedelta
 dummySheet = 'dummy' + main.SHEETEXT
 fakeSheet = 'fake' + main.SHEETEXT
 
+ERROR = 0.0001
+
 
 def fakeDict(num=100, bal=100):
     json_dict = {main.INIT: main.timestamp()}

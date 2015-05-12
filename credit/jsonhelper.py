@@ -29,5 +29,5 @@ def update_dict(json_dict, field, val):
     """
     if not json_dict.has_key(field):
         json_dict[field] = []
-    json_dict[field].append(val)
+    json_dict[field].append(str(val))
     return json_dict

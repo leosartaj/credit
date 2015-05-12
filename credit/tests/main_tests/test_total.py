@@ -3,11 +3,11 @@
 import os
 from credit import main, exce
 from credit import jsonhelper as jh
-import testData as td
+from credit.tests import testData as td
 import unittest
 
 
-class TestTotal(unittest.TestCase):
+class Test_total(unittest.TestCase):
 
     def setUp(self):
         self.bal = 1000.50
@@ -19,11 +19,11 @@ class TestTotal(unittest.TestCase):
     def test_total_list(self):
         l = td.create_list(self.bal)
         tl = main.total_list(l)
-        self.assertTrue(abs(tl - self.bal) < 0.0001)
+        self.assertTrue(abs(tl - self.bal) < td.ERROR)
 
     def test_total(self):
         tl = main.total(td.fakeSheet)
-        self.assertTrue(abs(tl - self.bal) < 0.0001)
+        self.assertTrue(abs(tl - self.bal) < td.ERROR)
 
     def tearDown(self):
         os.remove(td.fakeSheet)

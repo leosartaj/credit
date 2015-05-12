@@ -3,23 +3,25 @@
 import os
 from credit import main, exce
 from credit import jsonhelper as jh
-import testData as td
+from credit.tests import testData as td
 import unittest
 
 
-class TestreadSheet(unittest.TestCase):
+class Test_resetSheet(unittest.TestCase):
 
     def setUp(self):
         fakeDict = self.fakeDict = td.fakeDict()
         with open(td.fakeSheet, 'w') as f:
             f.write(jh.dict_to_json(fakeDict))
 
-    def test_readSheet(self):
+    def test_resetSheet(self):
         self.assertEqual(main.readSheet(td.fakeSheet), self.fakeDict)
+        main.resetSheet(td.fakeSheet)
+        self.assertEqual(main.readSheet(td.fakeSheet), td.fakeDict(0, 0))
 
-    def test_readSheet_no_sheet(self):
+    def test_resetSheet_no_sheet(self):
         self.assertRaises(exce.CreditSheetError, \
-                            main.readSheet, td.dummySheet)
+                            main.resetSheet, td.dummySheet)
 
     def tearDown(self):
         os.remove(td.fakeSheet)
