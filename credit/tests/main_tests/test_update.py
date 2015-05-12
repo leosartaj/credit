@@ -18,7 +18,7 @@ class Test_update(unittest.TestCase):
 
     def test_update(self):
         d = main.timestamp(date.today() + timedelta(days=1))
-        self.fakeDict[d] = [self.bal]
+        self.fakeDict[d] = [str(self.bal)]
         main.update(td.fakeSheet, d, self.bal)
         self.assertEqual(main.readSheet(td.fakeSheet), self.fakeDict)
 
