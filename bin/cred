@@ -1,0 +1,7 @@
+#!/usr/bin/python2
+
+from credit import parser, main
+
+if __name__ == '__main__':
+    cmdparser = parser.setup_parser()
+    args = cmdparser.parse_args()

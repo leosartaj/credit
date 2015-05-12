@@ -19,7 +19,7 @@ setup(
     keywords = 'expenditure finances ledger',
     url = 'http://github.com/leosartaj/credit',
     packages=find_packages(),
-    scripts=['bin/credit'],
+    scripts=['bin/cred'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',

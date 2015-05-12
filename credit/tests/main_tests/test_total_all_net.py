@@ -26,8 +26,8 @@ class Test_total_all_net(unittest.TestCase):
     def test_total_all(self):
         num_files = 0
         totals = 0
-        for filename, total in main.total_all():
-            self.assertTrue(filename in self.files)
+        for sheetname, total in main.total_all():
+            self.assertTrue((sheetname + main.SHEETEXT) in self.files)
             num_files += 1
             totals += total
         self.assertEqual(num_files, self.fnum)

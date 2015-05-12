@@ -124,11 +124,9 @@ def total_all(dire=pDir()):
     """
     Total of all sheets
     """
-    for filename in os.listdir(dire):
-        fPath = full_path_to(filename, dire)
-        name, ext = os.path.splitext(filename)
-        if ext == SHEETEXT:
-            yield filename, total(fPath)
+    for sheetname in display(dire):
+        fPath = full_path_to(sheetname + SHEETEXT, dire)
+        yield sheetname, total(fPath)
 
 
 def net(dire=pDir(), ignore=['me']):
