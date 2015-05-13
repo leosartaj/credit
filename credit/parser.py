@@ -37,7 +37,7 @@ def add_subparsers(parser):
     """
     Adds various subparsers to the main parser
     """
-    subparsers = parser.add_subparsers(help='sub-command help')
+    subparsers = parser.add_subparsers(dest='action', help='sub-command help')
 
     # all the subparsers
     add_new_subparser(subparsers)
@@ -57,10 +57,6 @@ def add_new_subparser(subparsers):
     help = "Creates a new credit sheet with the supplied name"
     parser_new.add_argument('sheet', type=str, help=help)
 
-    help = "Change the creation date. Defaults to current date"
-    parser_new.add_argument('--date', '-d', type=str, default=main.timestamp(),\
-                            help=help)
-
 
 def add_print_subparser(subparsers):
     """
@@ -69,7 +65,10 @@ def add_print_subparser(subparsers):
     parser_print = subparsers.add_parser('print')
 
     help = "Prints the contents of the credit sheet"
-    parser_print.add_argument('print', type=str, help=help)
+    parser_print.add_argument('sheet', type=str, help=help)
+
+    help = "Returns the raw contents of the credit sheet"
+    parser_print.add_argument('--raw', action='store_true', help=help)
 
 
 def add_display_subparser(subparsers):
@@ -106,11 +105,7 @@ def add_reset_subparser(subparsers):
     parser_reset = subparsers.add_parser('reset')
 
     help = "Reset a credit sheet"
-    parser_reset.add_argument('reset', type=str, help=help)
-
-    help = "Change the creation date. Defaults to current date"
-    parser_reset.add_argument('--date', '-d', type=str, default=main.timestamp(),\
-                            help=help)
+    parser_reset.add_argument('sheet', type=str, help=help)
 
 
 def add_delete_subparser(subparsers):

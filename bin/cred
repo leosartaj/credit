@@ -2,6 +2,36 @@
 
 from credit import parser, main
 
+def bootstrap():
+    """
+    bootstraps credit
+    """
+    pass
+
+
 if __name__ == '__main__':
     cmdparser = parser.setup_parser()
     args = cmdparser.parse_args()
+
+    action = args.action
+
+    if action == 'new':
+        sheetname = args.sheet + main.SHEETEXT
+        main.newSheet(sheetname)
+    elif action == 'print':
+        sheetname = args.sheet + main.SHEETEXT
+        if not args.raw:
+            cnt = main.displaySheet(sheetname)
+        else:
+            cnt = main.readSheet(sheetname)
+        print cnt
+    elif action == 'display':
+        pass
+    elif action == 'net':
+        pass
+    elif action == 'reset':
+        sheetname = args.sheet + main.SHEETEXT
+        main.resetSheet(sheetname)
+    elif action == 'delete':
+        sheetname = args.sheet + main.SHEETEXT
+        main.deleteSheet(sheetname)

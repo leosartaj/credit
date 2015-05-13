@@ -144,11 +144,14 @@ def displaySheet(fPath):
     """
     displays the content of a sheet
     """
-    json_dict = readsheet(fPath)
+    json_dict = readSheet(fPath)
     val = ''
     for key in json_dict:
         val += key + KEYSEP
-        val += VALSEP.join(json_dict[key])
+        if key == INIT:
+            val += json_dict[key]
+        else:
+            val += VALSEP.join(json_dict[key])
         val += '\n'
     return val
 
