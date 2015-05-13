@@ -14,6 +14,9 @@
 # Optimized Python bytecode file
 *.pyo
 
+# unnecessary .sheet files, maybe generated when testing
+*.sheet
+
 # Vim's swap files
 *.sw[op]
 
