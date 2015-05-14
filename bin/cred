@@ -4,37 +4,34 @@ from credit import parser, main
 from credit import printing as pr
 
 
-def bootstrap():
-    """
-    bootstraps credit
-    """
-    pass
-
-
 if __name__ == '__main__':
+    main.bootstrap()
+
     cmdparser = parser.setup_parser()
     args = cmdparser.parse_args()
 
     action = args.action
 
     if action == 'new':
-        sheetname = args.sheet + main.SHEETEXT
+        sheetname = main.sheetPath(args.sheet)
         main.newSheet(sheetname)
     elif action == 'print':
-        sheetname = args.sheet + main.SHEETEXT
+        sheetname = main.sheetPath(args.sheet)
         print(main.displaySheet(sheetname, args.raw))
-    elif action == 'display':
-        totals = (not args.nototal)
-        print(main.displaySheetNames(totals=totals))
     elif action == 'update':
-        sheetname = args.sheet + main.SHEETEXT
-        date, amt = args.date, args.amount
+        sheetname = main.sheetPath(args.sheet)
+        date = main.validate_date(args.date)
+        amt = args.amount
         main.update(sheetname, date, amt)
     elif action == 'net':
-        print(main.net())
+        print(main.net(main.ROOT))
+    elif action == 'report':
+        if args.date:
+            args.date = main.validate_date(args.date)
+        print(main.report(main.ROOT, args.date))
     elif action == 'reset':
-        sheetname = args.sheet + main.SHEETEXT
+        sheetname = main.sheetPath(args.sheet)
         main.resetSheet(sheetname)
     elif action == 'delete':
-        sheetname = args.sheet + main.SHEETEXT
+        sheetname = main.sheetPath(args.sheet)
         main.deleteSheet(sheetname)

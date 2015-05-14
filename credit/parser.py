@@ -43,9 +43,9 @@ def add_subparsers(parser):
     # all the subparsers
     add_new_subparser(subparsers)
     add_print_subparser(subparsers)
-    add_display_subparser(subparsers)
     add_update_subparser(subparsers)
     add_net_subparser(subparsers)
+    add_report_subparser(subparsers)
     add_reset_subparser(subparsers)
     add_delete_subparser(subparsers)
 
@@ -73,19 +73,6 @@ def add_print_subparser(subparsers):
     parser_print.add_argument('--raw', action='store_true', help=help)
 
 
-def add_display_subparser(subparsers):
-    """
-    Subparser for the display command
-    """
-    parser_display = subparsers.add_parser('display')
-
-    help = "Displays all the credit sheets in the current account"
-    parser_display.add_argument('display', action='store_true', help=help)
-
-    help = "To hide the totals of the sheets "
-    parser_display.add_argument('--nototal', action='store_true', help=help)
-
-
 def add_update_subparser(subparsers):
     """
     Subparser for the update command
@@ -111,6 +98,20 @@ def add_net_subparser(subparsers):
     help = "Gives the net balance. Totals over all the sheets of the current \
         account. By default ignores sheet with name me."
     parser_net.add_argument('net', action='store_true', help=help)
+
+
+def add_report_subparser(subparsers):
+    """
+    Subparser for the report command
+    """
+    parser_report = subparsers.add_parser('report')
+
+    help = "Gives the full report."
+    parser_report.add_argument('report', action='store_true', help=help)
+
+    help = "Gives the report for a particular date. By default, full report is \
+        given"
+    parser_report.add_argument('--date', default=None, help=help)
 
 
 def add_reset_subparser(subparsers):

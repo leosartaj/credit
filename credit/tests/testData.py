@@ -20,6 +20,14 @@ def fakeDict(num=100, bal=100):
     return json_dict
 
 
+def inc_date(d=date.today(), days=1):
+    """
+    increases the date by days
+    """
+    incdate = d + timedelta(days=days)
+    return incdate
+
+
 def add_lists(json_dict, num, bal, d=date.today()):
     """
     adds 'num' number of lists
@@ -27,8 +35,8 @@ def add_lists(json_dict, num, bal, d=date.today()):
     """
     list_bal = float(bal) / num
     for i in range(1, num + 1):
-        d += timedelta(days=i)
-        json_dict[main.timestamp(d)] = create_list(list_bal)
+        nd = inc_date(d, i)
+        json_dict[main.timestamp(nd)] = create_list(list_bal)
     return json_dict
 
 

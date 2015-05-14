@@ -39,4 +39,3 @@ class Test_total_all_net(unittest.TestCase):
     def tearDown(self):
         for name in self.files:
             os.remove(name)
-
