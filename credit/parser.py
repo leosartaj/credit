@@ -109,6 +109,10 @@ def add_report_subparser(subparsers):
     help = "Gives the full report."
     parser_report.add_argument('report', action='store_true', help=help)
 
+    help = "Gives the report for a particular date. By default, full report is \
+        given"
+    parser_report.add_argument('--date', default=None, help=help)
+
 
 def add_reset_subparser(subparsers):
     """

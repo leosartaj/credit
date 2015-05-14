@@ -111,22 +111,12 @@ def newSheet(fPath, json_dict={INIT: timestamp()}):
         f.write(jh.dict_to_json(json_dict))
 
 
-def display(dire=pDir()):
-    """
-    Generates the name of credit sheets
-    """
-    for filename in os.listdir(dire):
-        name, ext = os.path.splitext(filename)
-        if ext == SHEETEXT:
-            yield name
-
-
-def update(fPath, field, value):
+def update(fPath, date, value):
     """
     update to file
     """
     json_dict = readSheet(fPath)
-    json_dict = jh.update_dict(json_dict, field, value)
+    json_dict = jh.update_dict(json_dict, date, value)
     saveSheet(fPath, json_dict)
 
 
@@ -139,50 +129,66 @@ def total_list(l):
     return math.fsum(l)
 
 
-def total(fPath):
+def total(fPath, date=None):
     """
     finds the total balance in a credit sheet
+    if date is not None, totals for that specific date
     """
     json_dict = readSheet(fPath)
 
     val = 0.0
     for key in json_dict:
-        if not key == INIT:
-            val += total_list(json_dict[key])
+        if date == None or date == key:
+            if not key == INIT:
+                val += total_list(json_dict[key])
     return val
 
 
-def total_all(dire=pDir()):
+def total_all(dire=pDir(), date=None):
     """
     Total of all sheets
+    if date is not None, totals for that specific date
     """
-    for sheetname in display(dire):
+    for sheetname in sheetNames(dire):
         fPath = full_path_to(sheetname + SHEETEXT, dire)
-        yield sheetname, total(fPath)
+        yield sheetname, total(fPath, date)
 
 
-def net(dire=pDir(), ignore=['me']):
+def net(dire=pDir(), date=None, ignore=['me']):
     """
     Get the net credit accounting all files
+    if date is not None, calculates net total for that specific date
     """
     net = 0.0
-    for sheet, bal in total_all(dire):
+    for sheet, bal in total_all(dire, date):
         if not sheet in ignore:
             net += bal
     return net
 
 
-def displaySheetNames(dire=ROOT, totals=True):
+def sheetNames(dire=pDir()):
+    """
+    Generates the name of credit sheets
+    """
+    for filename in os.listdir(dire):
+        name, ext = os.path.splitext(filename)
+        if ext == SHEETEXT:
+            yield name
+
+
+def sheetReport(dire=ROOT, date=None, totals=True):
     """
     Displays the sheet names alongwith totals
     if totals is set to True
+    if date is not None, shows total for only that date
     """
     if totals:
-        l = [(sheetname, str(total)) for sheetname, total in total_all(dire)]
+        l = [(sheetname, str(total)) for sheetname, total in \
+             total_all(dire, date)]
         for idx, val in enumerate(l):
             l[idx] = pr.printkv(val[0], val[1])
     else:
-        l = [sheetname for sheetname in display(dire)]
+        l = [sheetname for sheetname in sheetNames(dire)]
     return pr.printlist(l, pr.DELIMITER)
 
 
@@ -197,13 +203,13 @@ def displaySheet(fPath, raw=False):
         return json_dict
 
 
-def report(dire=ROOT):
+def report(dire=ROOT, date=None):
     """
     Gives a full report
     """
-    rep = displaySheetNames(dire, True)
+    rep = sheetReport(dire, date, totals=True)
     rep += 2*pr.DELIMITER
-    rep += pr.printkv('net', str(net(dire)))
+    rep += pr.printkv('net', str(net(dire, date)))
     return rep
 
 

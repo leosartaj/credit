@@ -6,7 +6,7 @@ from credit.tests import testData as td
 import unittest
 
 
-class Test_display(unittest.TestCase):
+class Test_sheetNames(unittest.TestCase):
 
     def setUp(self):
         self.fakeDict = td.fakeDict(0, 0)
@@ -19,8 +19,8 @@ class Test_display(unittest.TestCase):
             with open(name, 'w') as f:
                 f.write('')
 
-    def test_display(self):
-        fs = [(name + main.SHEETEXT) for name in main.display()]
+    def test_sheetNames(self):
+        fs = [(name + main.SHEETEXT) for name in main.sheetNames()]
         fs.sort()
         self.assertEqual(fs, self.files[:-1])
 

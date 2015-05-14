@@ -25,5 +25,11 @@ class Test_total(unittest.TestCase):
         tl = main.total(td.fakeSheet)
         self.assertTrue(abs(tl - self.bal) < td.ERROR)
 
+    def test_total_date(self):
+        d = main.timestamp(td.inc_date())
+        total_date = main.total_list(self.fakeDict[d])
+        tl = main.total(td.fakeSheet, d)
+        self.assertTrue(abs(tl - total_date) < td.ERROR)
+
     def tearDown(self):
         os.remove(td.fakeSheet)
