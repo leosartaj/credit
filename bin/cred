@@ -1,6 +1,8 @@
 #!/usr/bin/python2
 
 from credit import parser, main
+from credit import printing as pr
+
 
 def bootstrap():
     """
@@ -20,15 +22,16 @@ if __name__ == '__main__':
         main.newSheet(sheetname)
     elif action == 'print':
         sheetname = args.sheet + main.SHEETEXT
-        if not args.raw:
-            cnt = main.displaySheet(sheetname)
-        else:
-            cnt = main.readSheet(sheetname)
-        print cnt
+        print(main.displaySheet(sheetname, args.raw))
     elif action == 'display':
-        pass
+        totals = (not args.nototal)
+        print(main.displaySheetNames(totals=totals))
+    elif action == 'update':
+        sheetname = args.sheet + main.SHEETEXT
+        date, amt = args.date, args.amount
+        main.update(sheetname, date, amt)
     elif action == 'net':
-        pass
+        print(main.net())
     elif action == 'reset':
         sheetname = args.sheet + main.SHEETEXT
         main.resetSheet(sheetname)

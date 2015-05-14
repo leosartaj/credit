@@ -7,6 +7,7 @@ Main module
 import os, math
 from datetime import date
 import jsonhelper as jh
+import printing as pr
 import exce
 
 
@@ -140,20 +141,29 @@ def net(dire=pDir(), ignore=['me']):
     return net
 
 
-def displaySheet(fPath):
+def displaySheetNames(dire=pDir(), totals=True):
+    """
+    Displays the sheet names alongwith totals
+    if totals is set to True
+    """
+    if totals:
+        l = [(sheetname, str(total)) for sheetname, total in total_all(dire)]
+        for idx, val in enumerate(l):
+            l[idx] = pr.printkv(val[0], val[1])
+    else:
+        l = [sheetname for sheetname in display(dire)]
+    return pr.printlist(l, pr.DELIMITER)
+
+
+def displaySheet(fPath, raw=False):
     """
     displays the content of a sheet
     """
     json_dict = readSheet(fPath)
-    val = ''
-    for key in json_dict:
-        val += key + KEYSEP
-        if key == INIT:
-            val += json_dict[key]
-        else:
-            val += VALSEP.join(json_dict[key])
-        val += '\n'
-    return val
+    if raw == False:
+        return pr.print_dict(json_dict, special=[INIT])
+    else:
+        return json_dict
 
 
 def deleteSheet(fPath):

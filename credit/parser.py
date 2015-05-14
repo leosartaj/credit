@@ -37,12 +37,14 @@ def add_subparsers(parser):
     """
     Adds various subparsers to the main parser
     """
-    subparsers = parser.add_subparsers(dest='action', help='sub-command help')
+    subparsers = parser.add_subparsers(dest='action', title='sub-commands', \
+                                       help='sub-command -h for help')
 
     # all the subparsers
     add_new_subparser(subparsers)
     add_print_subparser(subparsers)
     add_display_subparser(subparsers)
+    add_update_subparser(subparsers)
     add_net_subparser(subparsers)
     add_reset_subparser(subparsers)
     add_delete_subparser(subparsers)
@@ -84,6 +86,22 @@ def add_display_subparser(subparsers):
     parser_display.add_argument('--nototal', action='store_true', help=help)
 
 
+def add_update_subparser(subparsers):
+    """
+    Subparser for the update command
+    """
+    parser_update = subparsers.add_parser('update')
+
+    help = "Name of the sheet in which update takes place."
+    parser_update.add_argument('sheet', type=str, help=help)
+
+    help = "amount to be added.(+/- number)."
+    parser_update.add_argument('amount', type=str, help=help)
+
+    help = "Change the date. Defaults to current date."
+    parser_update.add_argument('--date', default=main.timestamp(), help=help)
+
+
 def add_net_subparser(subparsers):
     """
     Subparser for the net command
@@ -91,11 +109,8 @@ def add_net_subparser(subparsers):
     parser_net = subparsers.add_parser('net')
 
     help = "Gives the net balance. Totals over all the sheets of the current \
-        account"
+        account. By default ignores sheet with name me."
     parser_net.add_argument('net', action='store_true', help=help)
-
-    help = "To hide the totals of the sheets "
-    parser_net.add_argument('--nototal', action='store_true', help=help)
 
 
 def add_reset_subparser(subparsers):
