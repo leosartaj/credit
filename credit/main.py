@@ -11,10 +11,25 @@ import printing as pr
 import exce
 
 
+ROOT = os.path.expanduser('~/.credit')
 SHEETEXT = '.sheet' # extension of a credit sheet
 INIT = 'created'
-KEYSEP = ' -> '
-VALSEP = ' '
+
+
+def bootstrap(root=ROOT):
+    """
+    setups everything required
+    Creates the root directory
+    """
+    if not dirExists(root):
+        createDir(root)
+
+
+def createDir(dire):
+    """
+    Creates a new directory
+    """
+    os.makedirs(dire)
 
 
 def pDir():
@@ -24,12 +39,28 @@ def pDir():
     return os.getcwd()
 
 
+def sheetPath(sheetname, ext=SHEETEXT, root=ROOT):
+    """
+    returns the path of the sheet
+    """
+    return full_path_to(sheetname + ext, root)
+
+
 def full_path_to(fName, dire=pDir()):
     """
     joins the filename and the directory path
     """
     path = os.path.join(dire, fName)
     return path
+
+
+def dirExists(fPath):
+    """
+    Check if a dir exists
+    """
+    if os.path.isdir(fPath):
+        return True
+    return False
 
 
 def fileExists(fPath):
