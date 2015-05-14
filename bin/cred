@@ -1,0 +1,40 @@
+#!/usr/bin/python2
+
+from credit import parser, main
+from credit import printing as pr
+
+
+def bootstrap():
+    """
+    bootstraps credit
+    """
+    pass
+
+
+if __name__ == '__main__':
+    cmdparser = parser.setup_parser()
+    args = cmdparser.parse_args()
+
+    action = args.action
+
+    if action == 'new':
+        sheetname = args.sheet + main.SHEETEXT
+        main.newSheet(sheetname)
+    elif action == 'print':
+        sheetname = args.sheet + main.SHEETEXT
+        print(main.displaySheet(sheetname, args.raw))
+    elif action == 'display':
+        totals = (not args.nototal)
+        print(main.displaySheetNames(totals=totals))
+    elif action == 'update':
+        sheetname = args.sheet + main.SHEETEXT
+        date, amt = args.date, args.amount
+        main.update(sheetname, date, amt)
+    elif action == 'net':
+        print(main.net())
+    elif action == 'reset':
+        sheetname = args.sheet + main.SHEETEXT
+        main.resetSheet(sheetname)
+    elif action == 'delete':
+        sheetname = args.sheet + main.SHEETEXT
+        main.deleteSheet(sheetname)
