@@ -20,11 +20,14 @@ if __name__ == '__main__':
         print(main.displaySheet(sheetname, args.raw))
     elif action == 'update':
         sheetname = main.sheetPath(args.sheet)
-        date, amt = args.date, args.amount
+        date = main.validate_date(args.date)
+        amt = args.amount
         main.update(sheetname, date, amt)
     elif action == 'net':
         print(main.net(main.ROOT))
     elif action == 'report':
+        if args.date:
+            args.date = main.validate_date(args.date)
         print(main.report(main.ROOT, args.date))
     elif action == 'reset':
         sheetname = main.sheetPath(args.sheet)

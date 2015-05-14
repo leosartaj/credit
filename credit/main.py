@@ -4,7 +4,7 @@
 Main module
 """
 
-import os, math
+import os, math, re
 from datetime import date
 import jsonhelper as jh
 import printing as pr
@@ -72,7 +72,17 @@ def fileExists(fPath):
     return False
 
 
-def timestamp(d=date.today(), form="%d/%m/%y"):
+def validate_date(date, form='^\d\d/\d\d/\d\d\d\d$'):
+    """
+    If date not of desired format raises DateNotSupported exception
+    otherwise simply returns the date
+    """
+    if not re.match(form, date):
+        raise exce.DateNotSupported("%s is not supported. Date should be of the form \'DD/MM/YYYY\'." %(date))
+    return date
+
+
+def timestamp(d=date.today(), form="%d/%m/%Y"):
     """
     formats dates
     """
