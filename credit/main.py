@@ -172,7 +172,7 @@ def net(dire=pDir(), ignore=['me']):
     return net
 
 
-def displaySheetNames(dire=pDir(), totals=True):
+def displaySheetNames(dire=ROOT, totals=True):
     """
     Displays the sheet names alongwith totals
     if totals is set to True
@@ -195,6 +195,16 @@ def displaySheet(fPath, raw=False):
         return pr.print_dict(json_dict, special=[INIT])
     else:
         return json_dict
+
+
+def report(dire=ROOT):
+    """
+    Gives a full report
+    """
+    rep = displaySheetNames(dire, True)
+    rep += 2*pr.DELIMITER
+    rep += pr.printkv('net', str(net(dire)))
+    return rep
 
 
 def deleteSheet(fPath):

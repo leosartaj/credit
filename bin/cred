@@ -27,6 +27,8 @@ if __name__ == '__main__':
         main.update(sheetname, date, amt)
     elif action == 'net':
         print(main.net(main.ROOT))
+    elif action == 'report':
+        print(main.report(main.ROOT))
     elif action == 'reset':
         sheetname = main.sheetPath(args.sheet)
         main.resetSheet(sheetname)

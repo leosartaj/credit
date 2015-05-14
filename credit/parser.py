@@ -46,6 +46,7 @@ def add_subparsers(parser):
     add_display_subparser(subparsers)
     add_update_subparser(subparsers)
     add_net_subparser(subparsers)
+    add_report_subparser(subparsers)
     add_reset_subparser(subparsers)
     add_delete_subparser(subparsers)
 
@@ -111,6 +112,16 @@ def add_net_subparser(subparsers):
     help = "Gives the net balance. Totals over all the sheets of the current \
         account. By default ignores sheet with name me."
     parser_net.add_argument('net', action='store_true', help=help)
+
+
+def add_report_subparser(subparsers):
+    """
+    Subparser for the report command
+    """
+    parser_report = subparsers.add_parser('report')
+
+    help = "Gives the full report."
+    parser_report.add_argument('report', action='store_true', help=help)
 
 
 def add_reset_subparser(subparsers):
