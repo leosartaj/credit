@@ -18,9 +18,6 @@ if __name__ == '__main__':
     elif action == 'print':
         sheetname = main.sheetPath(args.sheet)
         print(main.displaySheet(sheetname, args.raw))
-    elif action == 'display':
-        totals = (not args.nototal)
-        print(main.displaySheetNames(main.ROOT, totals=totals))
     elif action == 'update':
         sheetname = main.sheetPath(args.sheet)
         date, amt = args.date, args.amount

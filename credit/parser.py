@@ -43,7 +43,6 @@ def add_subparsers(parser):
     # all the subparsers
     add_new_subparser(subparsers)
     add_print_subparser(subparsers)
-    add_display_subparser(subparsers)
     add_update_subparser(subparsers)
     add_net_subparser(subparsers)
     add_report_subparser(subparsers)
@@ -72,19 +71,6 @@ def add_print_subparser(subparsers):
 
     help = "Returns the raw contents of the credit sheet"
     parser_print.add_argument('--raw', action='store_true', help=help)
-
-
-def add_display_subparser(subparsers):
-    """
-    Subparser for the display command
-    """
-    parser_display = subparsers.add_parser('display')
-
-    help = "Displays all the credit sheets in the current account"
-    parser_display.add_argument('display', action='store_true', help=help)
-
-    help = "To hide the totals of the sheets "
-    parser_display.add_argument('--nototal', action='store_true', help=help)
 
 
 def add_update_subparser(subparsers):
