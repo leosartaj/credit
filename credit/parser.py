@@ -44,7 +44,6 @@ def add_subparsers(parser):
     add_new_subparser(subparsers)
     add_print_subparser(subparsers)
     add_update_subparser(subparsers)
-    add_net_subparser(subparsers)
     add_report_subparser(subparsers)
     add_reset_subparser(subparsers)
     add_delete_subparser(subparsers)
@@ -89,17 +88,6 @@ def add_update_subparser(subparsers):
     parser_update.add_argument('--date', default=main.timestamp(), help=help)
 
 
-def add_net_subparser(subparsers):
-    """
-    Subparser for the net command
-    """
-    parser_net = subparsers.add_parser('net')
-
-    help = "Gives the net balance. Totals over all the sheets of the current \
-        account. By default ignores sheet with name me."
-    parser_net.add_argument('net', action='store_true', help=help)
-
-
 def add_report_subparser(subparsers):
     """
     Subparser for the report command
@@ -109,9 +97,11 @@ def add_report_subparser(subparsers):
     help = "Gives the full report."
     parser_report.add_argument('report', action='store_true', help=help)
 
-    help = "Gives the report for a particular date. By default, full report is \
-        given"
+    help = """Gives the report for a particular date. By default, report for"
+            "all dates is given"""
     parser_report.add_argument('--date', default=None, help=help)
+    help = "Gives a short report."
+    parser_report.add_argument('--short', action='store_true', help=help)
 
 
 def add_reset_subparser(subparsers):
